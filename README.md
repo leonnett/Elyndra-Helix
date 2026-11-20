@@ -2,7 +2,7 @@
 
 Elyndra Helix H1 is an experimental, independently developed 32-bit processor research platform. It implements an in-order RV32I integer core and a bounded comparison of three Helix Adaptive Execution Fabric (HAEF) configurations. The project makes no novelty, silicon, timing, area, power, or performance claim.
 
-**Status:** RTL, verification sources, synthesis scripts, and cloud workflows are prepared locally. No HDL compilation or simulation has yet run; the evidence workflows must execute in GitHub Actions after publication. This is not a RISC-V compliance claim.
+**Status:** Published at [github.com/leonnett/Elyndra-Helix](https://github.com/leonnett/Elyndra-Helix). GitHub Actions passed simulation, lint, and generic synthesis for code commit [`a353276`](https://github.com/leonnett/Elyndra-Helix/commit/a353276554d4b54f5e5323bb73053be064ed97d0). The simulation passed 11 Cocotb cases across eight top-level suites using seed `1212231729`; Verilator lint and Yosys synthesis passed for A/B/C. This is not an independent RISC-V compliance claim.
 
 ## Architecture
 
@@ -50,20 +50,20 @@ All variants use the same ISA behavior and bus contract. Configuration C holds o
 - `scripts/`: cloud simulation, lint, synthesis, variant comparison, report, and static checks.
 - `research/`: architecture, experimental protocol, methodology, and limitations.
 - `research/tool-licenses.md`: external tool license review.
-- `results/`: report conventions. Generated evidence is uploaded by CI; this checkout contains no fabricated result files.
+- `results/`: report conventions and links to the generated cloud evidence artifacts; no synthetic result files are committed.
 - `.github/workflows/`: independent cloud simulation and synthesis workflows.
 
 ## Verification and evidence
 
 Cocotb tests cover ALU operations with directed and seeded randomized inputs, branch predicates, immediate formats, decoder legality, register-file reset and `x0`, and processor-level instruction streams. The core tests compare every retired instruction and register result against an independent Python interpreter. They also exercise loads, stores, control flow, `FENCE`, illegal instructions, `ECALL`, `EBREAK`, misalignment, and instruction/data access faults.
 
-The fixed random seed is `1212231729` by default and may be overridden with `HELIX_SEED`. Every generated simulation report records the seed, RTL SHA-256, tool versions, test names, status, logs, and JUnit XML paths. Failures include instruction, PC/input state, expected and actual values, and the test location.
+The fixed random seed is `1212231729` by default and may be overridden with `HELIX_SEED`. Every generated simulation report records the seed, RTL SHA-256, tool versions, test names, status, logs, and JUnit XML paths. Failures include instruction, PC/input state, expected and actual values, and the test location. The passing run and its uploaded evidence are linked in [`research/evidence-status.json`](research/evidence-status.json).
 
-No compile, simulation, synthesis, or benchmark result is present until a cloud workflow actually runs. The tests are verification sources, not evidence that they passed.
+Cloud compilation, simulation, lint, and generic synthesis have now run and passed for commit `a353276`. The reports and raw logs remain as GitHub Actions artifacts with the retention dates recorded in the evidence status. The tests do not establish ISA compliance or physical implementation results.
 
 ## Synthesis methodology
 
-Yosys synthesizes each variant independently into generic cells, checks the resulting design, and writes machine-readable netlists and counts. Verilator lint and Yosys warnings are retained in the evidence artifacts. The comparison script refuses to compare different RTL source hashes.
+Yosys synthesizes each variant independently into generic cells, checks the resulting design, and writes machine-readable netlists and counts. Verilator lint and Yosys warnings are retained in the evidence artifacts. The passing A/B/C reports use the same RTL source hash; the comparison script refuses to compare different hashes.
 
 Generic cell totals and sequential-cell counts are tool outputs for the current generic netlist. They are not physical area, timing closure, power, energy, silicon cost, or workload performance. No technology library, timing constraint, switching activity, PDK, or physical implementation is included.
 
@@ -73,10 +73,12 @@ The project policy is to run HDL compilation, simulation, and synthesis only in 
 
 The toolchain is recorded in [`toolchain.lock.json`](toolchain.lock.json): Python 3.12.14, Cocotb 2.0.0, Verilator v5.036, and Yosys 0.69 from the pinned `yowasp-yosys` package. GitHub-hosted Ubuntu 24.04 runners provision the tools. The Verilator source tag is fixed; its reported version and each RTL hash are captured with the run.
 
-After the GitHub repository is created and these files are pushed, the two workflows run on pushes and pull requests:
+The public repository is [github.com/leonnett/Elyndra-Helix](https://github.com/leonnett/Elyndra-Helix). Its two workflows run on pushes and pull requests:
 
 1. `simulation.yml` runs Python static validation and all Cocotb/Verilator suites.
 2. `synthesis.yml` runs Verilator lint, Yosys synthesis for A/B/C, structural comparisons, and report generation.
+
+Latest passing runs: [simulation](https://github.com/leonnett/Elyndra-Helix/actions/runs/44826727248) and [synthesis comparison](https://github.com/leonnett/Elyndra-Helix/actions/runs/44826727199). The artifacts include the JSON/Markdown summaries, logs, JUnit results, netlists, and comparison data.
 
 Use `make check` for local static Python/configuration checks. Use the Actions page or `workflow_dispatch` to run resource-intensive HDL work in the cloud. `make simulation`, `make synthesis`, and `make benchmark` are intended for the cloud runner.
 

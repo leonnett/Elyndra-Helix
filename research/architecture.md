@@ -2,7 +2,7 @@
 
 ## Scope
 
-Helix Core H1 is a 32-bit, single-hart, in-order processor for the RV32I base integer ISA. The RTL is designed to be synthesizable by Verilator and Yosys, but its syntax and behavior remain unverified until cloud CI completes. No RISC-V compliance suite has run.
+Helix Core H1 is a 32-bit, single-hart, in-order processor for the RV32I base integer ISA. Cloud Verilator simulation, lint, and generic Yosys synthesis passed for configurations A/B/C on code commit `a353276`. No independent RISC-V compliance suite has run.
 
 ## Execution model
 

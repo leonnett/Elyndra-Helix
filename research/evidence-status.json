@@ -1,10 +1,84 @@
 {
   "schema_version": 1,
   "research_id": "FND-HW-ARCH-003",
-  "status": "PENDING_CLOUD_CI",
-  "simulation": null,
-  "lint": null,
-  "synthesis": null,
-  "public_repository_url": null,
-  "note": "Source, tests, and workflows are prepared locally. No RTL compilation, simulation, synthesis, or public release has been verified."
+  "experiment_id": "ELY-H1-EXP-001",
+  "status": "PASSED_CLOUD_CI",
+  "public_repository_url": "https://github.com/leonnett/Elyndra-Helix",
+  "verified_code_commit": "a353276554d4b54f5e5323bb73053be064ed97d0",
+  "source_manifest": {
+    "rtl_source_file_count": 10,
+    "rtl_source_sha256": "f20624657051e26074e4dba2e467a1033689e864f0eaef70cb043f6e9b0950e1",
+    "experiment_protocol_sha256": "118adbdcaf2473481caa51abeba4c24a67e795a37a10a90c9ce5a16c7014237c"
+  },
+  "toolchain": {
+    "runner": "GitHub Actions ubuntu-24.04",
+    "python": "3.12.14",
+    "cocotb": "2.0.0",
+    "verilator": "5.036",
+    "yosys": "0.69",
+    "yosys_distribution": "yowasp-yosys==0.69.0.0.post1233"
+  },
+  "simulation": {
+    "status": "PASSED",
+    "workflow_run_id": 44826727248,
+    "workflow_run_url": "https://github.com/leonnett/Elyndra-Helix/actions/runs/44826727248",
+    "seed": 1212231729,
+    "top_level_suite_count": 8,
+    "cocotb_test_case_count": 11,
+    "artifact": {
+      "id": 14674512974,
+      "name": "helix-simulation-evidence",
+      "sha256": "ddf37c4dc19388839386c9f32c836cccb811e44a1787b98ebc0d2400307afae8",
+      "created_utc": "2026-11-20T22:18:06Z",
+      "expires_utc": "2026-12-20T22:18:04Z"
+    }
+  },
+  "lint": {
+    "status": "PASSED",
+    "workflow_run_id": 44826727199,
+    "variants": {
+      "A": "PASSED",
+      "B": "PASSED",
+      "C": "PASSED"
+    }
+  },
+  "synthesis": {
+    "status": "PASSED",
+    "workflow_run_id": 44826727199,
+    "workflow_run_url": "https://github.com/leonnett/Elyndra-Helix/actions/runs/44826727199",
+    "mode": "generic cells; not physical implementation",
+    "variants": {
+      "A": "PASSED",
+      "B": "PASSED",
+      "C": "PASSED"
+    },
+    "artifact": {
+      "id": 14673774782,
+      "name": "helix-synthesis-evidence",
+      "sha256": "d945906c0923dcaeb87e955084007edb7f1872c74d4283cf5c18ac81aca092d1",
+      "created_utc": "2026-11-20T22:16:41Z",
+      "expires_utc": "2026-12-20T22:16:40Z"
+    }
+  },
+  "setup_retry_history": [
+    {
+      "workflow_run_id": 44824328908,
+      "workflow": "simulation",
+      "outcome": "FAILED_BEFORE_RTL_TESTS",
+      "cause": "The Verilator source build lacked FlexLexer.h; the runner dependencies were corrected to install libfl-dev and help2man."
+    },
+    {
+      "workflow_run_id": 44824328941,
+      "workflow": "synthesis",
+      "outcome": "FAILED_BEFORE_RTL_SYNTHESIS",
+      "cause": "The Verilator source build lacked help2man and FlexLexer.h; the runner dependencies were corrected to install help2man and libfl-dev."
+    },
+    {
+      "workflow_run_id": 44825521723,
+      "workflow": "synthesis",
+      "outcome": "FAILED_BEFORE_RTL_SYNTHESIS",
+      "cause": "The pinned YoWASP package provides the yowasp-yosys executable; the synthesis runner initially invoked yosys. The command was corrected."
+    }
+  ],
+  "claim_boundary": "These results verify the recorded project tests and generic A/B/C synthesis only. No independent RISC-V compliance, privileged-ISA, physical area, timing, power, energy, silicon, or workload-performance claim is established."
 }
