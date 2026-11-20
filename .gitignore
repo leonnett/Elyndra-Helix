@@ -1,0 +1,14 @@
+build/
+results/simulation/*.json
+results/simulation/*.md
+results/simulation/*.log
+results/synthesis/*.json
+results/synthesis/*.md
+results/synthesis/*.log
+results/comparison/*
+results/report/*
+__pycache__/
+*.py[cod]
+*.vcd
+*.fst
+*.xml

@@ -1,0 +1,13 @@
+flowchart LR
+    PC[Program counter] --> BUS[Single outstanding memory bus]
+    BUS --> DEC[Instruction decoder]
+    DEC --> PREP[Operand and immediate preparation]
+    PREP --> HAEF[HAEF execution fabric]
+    HAEF --> BR[Branch and jump control]
+    HAEF --> MEM[Load/store formatter]
+    HAEF --> RF[32 x 32-bit register file]
+    MEM --> BUS
+    BR --> PC
+    RF --> PREP
+    HAEF --> RF
+    HAEF --> TRACE[Retirement and trap trace]

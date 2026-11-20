@@ -1,0 +1,10 @@
+{
+  "schema_version": 1,
+  "research_id": "FND-HW-ARCH-003",
+  "status": "PENDING_CLOUD_CI",
+  "simulation": null,
+  "lint": null,
+  "synthesis": null,
+  "public_repository_url": null,
+  "note": "Source, tests, and workflows are prepared locally. No RTL compilation, simulation, synthesis, or public release has been verified."
+}

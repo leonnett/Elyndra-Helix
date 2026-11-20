@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "project": "Elyndra Helix H1",
+  "experiment_id": "ELY-H1-EXP-001",
+  "locked_utc_date": "2026-11-20",
+  "platform": {
+    "runner": "GitHub Actions ubuntu-24.04",
+    "python": "3.12.14"
+  },
+  "verification": {
+    "cocotb": "2.0.0",
+    "verilator": {
+      "version": "5.036",
+      "source": "https://github.com/verilator/verilator",
+      "tag": "v5.036"
+    }
+  },
+  "synthesis": {
+    "yosys": {
+      "version": "0.69",
+      "distribution": "yowasp-yosys==0.69.0.0.post1233",
+      "reported_git_revision": "9f75ca1f9"
+    }
+  },
+  "workflows": {
+    "simulation": ".github/workflows/simulation.yml",
+    "synthesis": ".github/workflows/synthesis.yml"
+  },
+  "evidence_policy": "Record actual tool versions, RTL SHA-256, test seed, command, exit code, JUnit results, synthesis warnings, and generic netlist cell counts. Do not infer physical area, timing, power, energy, or silicon performance."
+}

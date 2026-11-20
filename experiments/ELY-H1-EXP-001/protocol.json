@@ -1,0 +1,51 @@
+{
+  "schema_version": 1,
+  "experiment_id": "ELY-H1-EXP-001",
+  "research_id": "FND-HW-ARCH-003",
+  "title": "HAEF generic structure comparison",
+  "status": "DEFINED_PENDING_CLOUD_CI",
+  "question": "How does generic Yosys structure change between the conventional ALU baseline, shared add/subtract arithmetic, and the shared datapath with a dedicated one-entry prepared-instruction buffer?",
+  "configurations": {
+    "A": {
+      "top": "helix_core_a",
+      "execution_config": 0,
+      "description": "Conventional addition and subtraction paths; no extra prepare/execute state"
+    },
+    "B": {
+      "top": "helix_core_b",
+      "execution_config": 1,
+      "description": "Shared add/subtract arithmetic; no extra prepare/execute state"
+    },
+    "C": {
+      "top": "helix_core_c",
+      "execution_config": 2,
+      "description": "Shared arithmetic plus a dedicated one-entry prepared-instruction buffer"
+    }
+  },
+  "frozen_conditions": {
+    "rtl_sources": "All sorted rtl/*.sv sources",
+    "source_hash": "SHA-256 over relative path, NUL byte, source bytes, NUL byte for each sorted RTL file",
+    "synthesis": "Yosys synth -top <top> -flatten; check; write_json",
+    "comparison_metrics": [
+      "generic_cell_count",
+      "sequential_cell_count",
+      "combinational_cell_count",
+      "generic_cell_types",
+      "warnings"
+    ],
+    "simulation_seed": 1212231729,
+    "simulation_toolchain": {
+      "python": "3.12.14",
+      "cocotb": "2.0.0",
+      "verilator": "5.036"
+    },
+    "synthesis_toolchain": {
+      "yosys": "0.69 via yowasp-yosys==0.69.0.0.post1233"
+    }
+  },
+  "acceptance": {
+    "functional": "All unit and processor-level Cocotb cases pass for A, B, and C against the independent reference model.",
+    "structural": "All lint and synthesis runs pass, and every variant reports the same RTL source hash and tool version.",
+    "claim_boundary": "Generic cell counts only; no inference of physical area, timing, power, energy, or workload performance."
+  }
+}
