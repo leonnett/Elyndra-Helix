@@ -17,6 +17,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 RTL_SOURCES = sorted((ROOT / "rtl").glob("*.sv"))
 VARIANTS = {"A": "helix_core_a", "B": "helix_core_b", "C": "helix_core_c"}
+YOSYS_COMMAND = "yowasp-yosys"
 
 
 def sha256_sources(paths: list[Path]) -> str:
@@ -75,7 +76,7 @@ def main() -> int:
         "tool_versions": {
             "python": sys.version.split()[0],
             "verilator": first_line(["verilator", "--version"]),
-            "yosys": first_line(["yosys", "-V"]) if not args.lint_only else "not run",
+            "yosys": first_line([YOSYS_COMMAND, "-V"]) if not args.lint_only else "not run",
         },
         "configurations": {},
     }
@@ -110,7 +111,7 @@ def main() -> int:
                 f"write_json {netlist.relative_to(ROOT).as_posix()}"
             )
             synth_log = result_dir / f"synthesis-{name}.log"
-            synthesis_status, synthesis_output = run(["yosys", "-p", yosys_script], synth_log)
+            synthesis_status, synthesis_output = run([YOSYS_COMMAND, "-p", yosys_script], synth_log)
             warnings = [line.strip() for line in synthesis_output.splitlines() if "Warning:" in line]
             if synthesis_status == 0 and netlist.is_file():
                 design = json.loads(netlist.read_text(encoding="utf-8"))

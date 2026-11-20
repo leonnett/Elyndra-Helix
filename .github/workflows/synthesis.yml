@@ -29,7 +29,7 @@ jobs:
           make -j2
           sudo make install
           verilator --version
-          yosys -V
+          yowasp-yosys -V
       - name: Run static checks and diagram validation
         run: make check diagrams
       - name: Lint and synthesize all HAEF configurations
